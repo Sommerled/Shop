@@ -26,7 +26,7 @@ public class OrderController {
 			
 			//make sure that item exists
 			if(item != null) {
-				Float itemsTotal = o.getQuantity() * item.getPrice();
+				Float itemsTotal = this.totalWithOffer(o.getId(), o.getQuantity(), item.getPrice());
 				
 				OrderSummaryItem orderSummaryItem = OrderSummaryItem.builder()
 						.name(item.getName())
@@ -42,6 +42,23 @@ public class OrderController {
 		orderSummary.setTotal(total);
 		
 		return orderSummary;
+	}
+	
+	private Float totalWithOffer(Long id, Long quantity, Float price) {
+		Float total = 0.0F;
+		Long offer = 0L;
+		
+		if(id.equals(1234L)) {
+			//apples
+			offer = quantity / 2; 
+		}else if(id.equals(5678L)) {
+			//oranges		
+			offer = quantity / 3;
+		}
+		
+		total = (quantity - offer) * price;
+		
+		return total;
 	}
 	
 	private Item findItem(Long id) {

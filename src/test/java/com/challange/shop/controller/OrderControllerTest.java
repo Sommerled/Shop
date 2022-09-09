@@ -31,7 +31,7 @@ class OrderControllerTest {
 		Long appleId = 1234L;
 		Long orangeId = 5678L;
 		Long quantity = 2L;
-		Float expected = 1.7F;
+		Float expected = 1.1F;
 		
 		orderItems.add(OrderItem.builder()
 				.id(appleId)
@@ -53,7 +53,7 @@ class OrderControllerTest {
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
 		Long appleId = 1234L;
 		Long quantity = 2L;
-		Float expected = 1.2F;
+		Float expected = 0.6F;
 		
 		orderItems.add(OrderItem.builder()
 				.id(appleId)
@@ -70,6 +70,23 @@ class OrderControllerTest {
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
 		Long orangeId = 5678L;
 		Long quantity = 2L;
+		Float expected = 0.5F;
+		
+		orderItems.add(OrderItem.builder()
+				.id(orangeId)
+				.quantity(quantity)
+				.build());
+		
+		OrderSummary summary = this.controller.Order(orderItems);
+		
+		assertThat(summary.getTotal()).isEqualTo(expected);
+	}
+	
+	@Test
+	void orangesThreeTest() {	
+		List<OrderItem> orderItems = new ArrayList<OrderItem>();
+		Long orangeId = 5678L;
+		Long quantity = 3L;
 		Float expected = 0.5F;
 		
 		orderItems.add(OrderItem.builder()
